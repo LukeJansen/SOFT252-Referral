@@ -7,6 +7,7 @@ package Tests;
  */
 
 import Accounts.*;
+import Utility.Utility;
 
 /**
  *
@@ -22,6 +23,9 @@ public class TestClass {
         
         System.out.println(user1.getUserID());
         System.out.println(user1.getPassword());
+        
+        float DD = 400.466f;
+        
+        System.out.println(Utility.GetTypeFromDD(DD));
     }
-    
 }
