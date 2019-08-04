@@ -23,8 +23,4 @@ public class Administrator extends User{
         super(UID, pass);
     }
     
-    public void printMessage(){
-        System.out.println("Test");
-    }
-    
 }

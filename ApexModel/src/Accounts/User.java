@@ -9,7 +9,7 @@ package Accounts;
  *
  * @author lpjan
  */
-public class User {
+public class User implements java.io.Serializable {
     
     private String userID;
     private String password;
