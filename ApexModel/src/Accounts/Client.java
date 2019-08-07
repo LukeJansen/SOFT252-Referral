@@ -23,4 +23,8 @@ public class Client extends User{
         super(UID, pass);
     }
     
+    public Client(String UID, String pass, String cname){
+        super(UID, pass, cname);
+    }
+    
 }

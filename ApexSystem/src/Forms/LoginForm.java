@@ -3,7 +3,10 @@ package Forms;
 
 import Accounts.*;
 import apexsystem.LoginHandler;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Arrays;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /*
@@ -26,8 +29,25 @@ public class LoginForm extends javax.swing.JFrame {
      * @param loginHandler
      */
     public LoginForm(LoginHandler loginHandler) {
-        this.loginHandler = loginHandler;
+        this.loginHandler = loginHandler;        
         initComponents();
+        
+        this.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                loginHandler.SaveLogins();
+                System.out.println("\nClosing Window");
+            }
+            
+            @Override
+            public void windowClosed(WindowEvent e)
+            {
+                loginHandler.SaveLogins();
+                System.out.println("\nClosing Window");
+            }
+        });
     }
 
     /**
@@ -52,12 +72,15 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jLabel1.setText("Apex Library");
 
+        userTextBox.setInheritsPopupMenu(true);
         userTextBox.setName("userTextBox"); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel2.setText("Username:");
+        jLabel2.setLabelFor(userTextBox);
+        jLabel2.setText("User ID:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel3.setLabelFor(passTextBox);
         jLabel3.setText("Password:");
 
         loginButton.setText("Login");
@@ -126,8 +149,20 @@ public class LoginForm extends javax.swing.JFrame {
         if (user == null){
             JOptionPane.showMessageDialog(this, "Incorrect Login Information");
         }
+        else if (user.getClass() == Administrator.class){
+            AdminForm form = new AdminForm(user, this);
+            form.setLocationRelativeTo(null);
+            form.setVisible(true);
+            this.setVisible(false);
+        }
+        else if (user.getClass() == Client.class){
+            ClientForm form = new ClientForm(user, this);
+            form.setLocationRelativeTo(null);
+            form.setVisible(true);
+            this.setVisible(false);
+        }
         else {
-            JOptionPane.showMessageDialog(this, user.getUserID());
+            JOptionPane.showMessageDialog(this, user.getClass().toString() + ": " + user.getUserID());
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -158,15 +193,15 @@ public class LoginForm extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new LoginForm().setVisible(true);
-            }
-        });
     }
-
+    
+    public void Reset()
+    {
+        userTextBox.setText("");
+        passTextBox.setText("");
+        setVisible(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

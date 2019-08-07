@@ -19,7 +19,7 @@ public class LoginHandler {
     
     public LoginHandler(){
         LoadLogins();
-        SaveLogins();
+        //SaveLogins();
     }
     
     public User Login(String username, String password){
@@ -35,7 +35,14 @@ public class LoginHandler {
     }
     
     private void LoadLogins(){
-            
+        
+//        userList.add(new Administrator("0000", "pass", "Administrator"));
+//        userList.add(new Client("1001", "pass", "User 1"));
+//        userList.add(new Client("1002", "pass", "User 2"));
+//        userList.add(new Client("1003", "pass", "User 3"));
+//        userList.add(new Client("1004", "pass", "User 4"));
+//        userList.add(new Client("1005", "pass", "User 5"));
+        
         File folder = new File("users/");
         File[] userFiles = folder.listFiles();
         
@@ -59,10 +66,10 @@ public class LoginHandler {
             }
         }
         
-        System.out.println("Loaded " + userList.size() + " logins!");
+        System.out.println("Loaded " + userList.size() + " logins!");        
     }
     
-    private void SaveLogins(){
+    public void SaveLogins(){
      
         for (User user : userList){
         
@@ -77,8 +84,6 @@ public class LoginHandler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        
-    }
-    
+        }   
+    } 
 }

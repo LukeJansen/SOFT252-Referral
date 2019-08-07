@@ -23,4 +23,8 @@ public class Administrator extends User{
         super(UID, pass);
     }
     
+    public Administrator(String UID, String pass, String cname){
+        super(UID, pass, cname);
+    }
+    
 }

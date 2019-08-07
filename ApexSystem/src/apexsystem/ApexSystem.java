@@ -6,6 +6,8 @@
 package apexsystem;
 
 import Forms.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,6 +17,8 @@ import java.util.concurrent.TimeUnit;
 public class ApexSystem {
     
     private LoginHandler loginHandler;
+    private LoadingForm loadingForm;
+    private LoginForm loginForm;
     
     /**
      * @param args the command line arguments
@@ -25,7 +29,7 @@ public class ApexSystem {
     }
     
     private void Setup() throws InterruptedException{
-        LoadingForm loadingForm = new LoadingForm();
+        loadingForm = new LoadingForm();
         
         loadingForm.setLoading("Loading Logins", 1);
         
@@ -38,11 +42,14 @@ public class ApexSystem {
         
         loadingForm.setLoading("Loading Login Form", 3);
         
-        LoginForm loginForm = new LoginForm(loginHandler);
+        loginForm = new LoginForm(loginHandler);
+        
         loginForm.setLocationRelativeTo(null);
         loginForm.setVisible(true);
         
         loadingForm.dispose();
     }
+    
+    
     
 }
