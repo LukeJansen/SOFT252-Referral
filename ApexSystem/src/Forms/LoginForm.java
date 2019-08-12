@@ -2,6 +2,7 @@ package Forms;
 
 
 import Accounts.*;
+import apexsystem.ApexSystem;
 import apexsystem.LoginHandler;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -22,32 +23,21 @@ import javax.swing.JOptionPane;
 public class LoginForm extends javax.swing.JFrame {
 
     private User user;
+    private ApexSystem system;
     private LoginHandler loginHandler;
     
     /**
      * Creates new form Login
+     * @param system
      * @param loginHandler
      */
-    public LoginForm(LoginHandler loginHandler) {
-        this.loginHandler = loginHandler;        
+    public LoginForm(ApexSystem system) {
+        this.system = system;
+        
+        loginHandler = system.getLoginHandler();
         initComponents();
         
-        this.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                loginHandler.SaveLogins();
-                System.out.println("\nClosing Window");
-            }
-            
-            @Override
-            public void windowClosed(WindowEvent e)
-            {
-                loginHandler.SaveLogins();
-                System.out.println("\nClosing Window");
-            }
-        });
+        this.getRootPane().setDefaultButton(loginButton);
     }
 
     /**
@@ -150,13 +140,13 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Incorrect Login Information");
         }
         else if (user.getClass() == Administrator.class){
-            AdminForm form = new AdminForm(user, this);
+            AdminForm form = new AdminForm(user, system);
             form.setLocationRelativeTo(null);
             form.setVisible(true);
             this.setVisible(false);
         }
         else if (user.getClass() == Client.class){
-            ClientForm form = new ClientForm(user, this);
+            ClientForm form = new ClientForm(user, system);
             form.setLocationRelativeTo(null);
             form.setVisible(true);
             this.setVisible(false);
@@ -199,7 +189,6 @@ public class LoginForm extends javax.swing.JFrame {
     {
         userTextBox.setText("");
         passTextBox.setText("");
-        setVisible(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

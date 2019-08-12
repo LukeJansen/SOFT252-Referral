@@ -15,11 +15,10 @@ import java.util.ArrayList;
  */
 public class LoginHandler {
     
-    ArrayList<User> userList = new ArrayList<User>();
+    public ArrayList<User> userList = new ArrayList<User>();
     
     public LoginHandler(){
-        LoadLogins();
-        //SaveLogins();
+        Load();
     }
     
     public User Login(String username, String password){
@@ -34,7 +33,7 @@ public class LoginHandler {
         return null;
     }
     
-    private void LoadLogins(){
+    private void Load(){
         
 //        userList.add(new Administrator("0000", "pass", "Administrator"));
 //        userList.add(new Client("1001", "pass", "User 1"));
@@ -43,7 +42,7 @@ public class LoginHandler {
 //        userList.add(new Client("1004", "pass", "User 4"));
 //        userList.add(new Client("1005", "pass", "User 5"));
         
-        File folder = new File("users/");
+        File folder = new File("data/users/");
         File[] userFiles = folder.listFiles();
         
         for (File file : userFiles){
@@ -69,12 +68,12 @@ public class LoginHandler {
         System.out.println("Loaded " + userList.size() + " logins!");        
     }
     
-    public void SaveLogins(){
+    public void Save(){
      
         for (User user : userList){
         
             try {
-                File file = new File("users/" + user.getUserID() + ".ser");
+                File file = new File("data/users/" + user.getUserID() + ".ser");
                 FileOutputStream fileOut = new FileOutputStream(file);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(user);

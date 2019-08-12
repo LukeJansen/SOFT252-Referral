@@ -5,6 +5,10 @@
  */
 package Accounts;
 
+import Resources.Resource;
+import Resources.ResourceStatus;
+import java.util.ArrayList;
+
 /**
  *
  * @author lpjan
@@ -15,29 +19,44 @@ public class User implements java.io.Serializable {
     private String password;
     
     private String name;
+    private boolean locked;
     
     public User(){
         userID = null;
         password = null;
         name = null;
+        locked = false;
     }
     
     public User(String UID){
         userID = UID;
         password = null;
         name = null;
+        locked = false;
     }
     
     public User(String UID, String pass){
         userID = UID;
         password = pass;
         name = null;
+        locked = false;
     }
     
     public User(String UID, String pass, String cname){
         userID = UID;
         password = pass;
         name = cname;
+        locked = false;
+    }
+    
+    public void Lock(ArrayList<Resource> list){
+        locked = false;
+        
+        for (Resource resource : list){
+            if (resource.getStatus() != ResourceStatus.AVAILABLE && (resource.getDueDate() - System.currentTimeMillis() < (-86400000 * 20))){
+                locked = true;
+            }
+        }
     }
 
     public String getUserID() {
@@ -62,5 +81,9 @@ public class User implements java.io.Serializable {
     
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isLocked() {
+        return locked;
     }
 }

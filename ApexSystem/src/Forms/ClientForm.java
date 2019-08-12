@@ -6,6 +6,8 @@
 package Forms;
 
 import Accounts.*;
+import Notifications.Notification;
+import apexsystem.*;
 import javax.swing.JFrame;
 
 /**
@@ -15,17 +17,24 @@ import javax.swing.JFrame;
 public class ClientForm extends JFrame {
 
     private User user;
-    private LoginForm callbackForm;
+    private ApexSystem system;
+    private NotificationHandler notificationHandler;
     
     /**
      * Creates new form AdminForm
      */
-    public ClientForm(User user, LoginForm form) {
+    public ClientForm(User user, ApexSystem system) {
         this.user = user;
-        this.callbackForm = form;
+        this.system = system;
+        this.notificationHandler = system.getNotificationHandler();
         initComponents();
-
+        
+        ShowNotifications();
+        
         welcomeLabel.setText("Welcome " + user.getName());
+        NotificationButton.setText("Notifications (" + notificationHandler.GetNotificationCount(user.getUserID()) + ")");
+        
+        
     }
 
     /**
@@ -40,12 +49,17 @@ public class ClientForm extends JFrame {
         jLabel = new javax.swing.JLabel();
         welcomeLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        ListResourcesButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        RequestResourceButton = new javax.swing.JButton();
+        NotificationButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(500, 250));
+        setMinimumSize(new java.awt.Dimension(500, 250));
+        setPreferredSize(new java.awt.Dimension(750, 300));
+        setResizable(false);
+        setSize(new java.awt.Dimension(750, 300));
 
         jLabel.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jLabel.setText("Apex Library");
@@ -60,113 +74,115 @@ public class ClientForm extends JFrame {
             }
         });
 
-        jButton1.setText("Create a Resource");
-
-        jButton2.setText("List Resources");
+        ListResourcesButton.setText("List Resources");
+        ListResourcesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListResourcesButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("Resource Management");
+        jLabel2.setText("Resources");
 
-        jButton3.setText("Purchase Requests");
-        jButton3.setActionCommand("");
+        RequestResourceButton.setText("Request a New Resource");
+        RequestResourceButton.setActionCommand("");
+        RequestResourceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RequestResourceButtonActionPerformed(evt);
+            }
+        });
+
+        NotificationButton.setText("Notifications");
+        NotificationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NotificationButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel)
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(welcomeLabel)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(logoutButton)
-                        .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel2)))
-                .addGap(50, 429, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(NotificationButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(logoutButton))
+                    .addComponent(welcomeLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ListResourcesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RequestResourceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(200, 200, 200))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(welcomeLabel)
-                        .addGap(5, 5, 5)
-                        .addComponent(logoutButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(logoutButton)
+                            .addComponent(NotificationButton)))
+                    .addComponent(jLabel))
+                .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(ListResourcesButton)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(161, 161, 161))
+                .addComponent(RequestResourceButton)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        callbackForm.Reset();
+        system.Logout();
         dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void ListResourcesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListResourcesButtonActionPerformed
+        ResourceListForm rlForm = new ResourceListForm(system.getResourceHandler(), user);
+        
+        rlForm.setVisible(true);
+        rlForm.setLocationRelativeTo(null);
+    }//GEN-LAST:event_ListResourcesButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
+    private void NotificationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificationButtonActionPerformed
+        ShowNotifications();
+    }//GEN-LAST:event_NotificationButtonActionPerformed
+
+    private void RequestResourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RequestResourceButtonActionPerformed
+        NewPurchaseRequestForm form = new NewPurchaseRequestForm(system.getRequestHandler());
+        
+        form.setVisible(true);
+        form.setLocationRelativeTo(null);
+    }//GEN-LAST:event_RequestResourceButtonActionPerformed
+    
+    private void ShowNotifications(){
+        notificationHandler.GenerateNotifications();
+        
+        for (Notification notification : notificationHandler.notificationList){
+            if (notification.getUserID().equals(user.getUserID())){
+                notification.Show();
             }
-        });
-    }
+        }
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton ListResourcesButton;
+    private javax.swing.JButton NotificationButton;
+    private javax.swing.JButton RequestResourceButton;
     private javax.swing.JLabel jLabel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton logoutButton;
