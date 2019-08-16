@@ -5,11 +5,15 @@
  */
 package Notifications;
 
+import java.io.Serializable;
+
 /**
  *
  * @author lpjan
  */
-public enum NotificationType {
+public enum NotificationType{
+    
     INFO,
     WARNING
+    
 }

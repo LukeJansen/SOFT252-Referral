@@ -19,7 +19,6 @@ public class ApexSystem {
     private NotificationHandler notificationHandler;
     private RequestHandler requestHandler;
     
-    private LoadingForm loadingForm;
     private LoginForm loginForm;
     
     /**
@@ -41,29 +40,14 @@ public class ApexSystem {
     private void Setup(){
         
         loginHandler = new LoginHandler();
-        resourceHandler = new ResourceHandler();
+        resourceHandler = new ResourceHandler(this);
         notificationHandler = new NotificationHandler(resourceHandler);
         requestHandler = new RequestHandler();
-        
-        
-        loadingForm = new LoadingForm();
-        
-        loadingForm.setLoading("Loading Logins", 1);
-        
-        loadingForm.setLocationRelativeTo(null);
-        loadingForm.setVisible(true);
-        
-        
-        loadingForm.setLoading("Loading Resources", 2);
-        
-        loadingForm.setLoading("Loading Login Form", 3);
         
         loginForm = new LoginForm(this);
         
         loginForm.setLocationRelativeTo(null);
         loginForm.setVisible(true);
-        
-        loadingForm.dispose();
     }
     
     public void Logout(){
@@ -75,6 +59,7 @@ public class ApexSystem {
         loginHandler.Save();
         resourceHandler.Save();
         requestHandler.Save();
+        notificationHandler.Save();
     }
 
     public LoginHandler getLoginHandler() {

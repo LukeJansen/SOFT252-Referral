@@ -8,7 +8,7 @@ package Forms;
 import Resources.*;
 import Utility.*;
 import Accounts.*;
-import apexsystem.ResourceHandler;
+import apexsystem.*;
 import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ResourceListForm extends javax.swing.JFrame {
 
+    private ApexSystem system;
     private ResourceHandler resourceHandler;
     private long lastClickTime;
     private User user;
@@ -25,8 +26,9 @@ public class ResourceListForm extends javax.swing.JFrame {
     /**
      * Creates new form ResourceListForm
      */
-    public ResourceListForm(ResourceHandler resourceHandler, User user) {
-        this.resourceHandler = resourceHandler;
+    public ResourceListForm(ApexSystem system, User user) {
+        this.system = system;
+        this.resourceHandler = system.getResourceHandler();
         lastClickTime = 0;
         this.user = user;
         
@@ -157,7 +159,7 @@ public class ResourceListForm extends javax.swing.JFrame {
     }
     
     private void OpenItem(){ 
-        ResourceInfoForm form = new ResourceInfoForm(resourceHandler.resourceList.get(resourceTable.getSelectedRow()), user, this);
+        ResourceInfoForm form = new ResourceInfoForm(resourceHandler.resourceList.get(resourceTable.getSelectedRow()), user, this, system.getNotificationHandler());
         form.setVisible(true);
         form.setLocationRelativeTo(null);
     }

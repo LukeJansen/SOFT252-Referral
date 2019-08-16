@@ -7,7 +7,6 @@ package Resources;
 
 import Accounts.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,11 +26,17 @@ public class Resource implements java.io.Serializable {
     private String loanedUser;
     private LoanType loanType;
     private long dueDate;
+    private int loanNoticeID;
     
     private boolean returnRequested;
     private boolean inNewsletter;
     
+    private boolean extensionRequested;
+    private int daysRequested;
+    
     private int ID;
+    
+    private int test;
     
     public Resource(){
         name = "Not Set!";
@@ -89,6 +94,7 @@ public class Resource implements java.io.Serializable {
         status = ResourceStatus.AVAILABLE;
         loanedUser = "";
         returnRequested = false;
+        loanNoticeID = 0;
     }
     
     public void CheckLoan(){
@@ -98,6 +104,25 @@ public class Resource implements java.io.Serializable {
         else if (System.currentTimeMillis() > dueDate && !"".equals(loanedUser)){
             status = ResourceStatus.OVERDUE;
         }
+    }
+    
+    public void RequestExtension(int days){
+        if (days != 0){
+            daysRequested = days;
+            extensionRequested = true;
+        }
+    }
+    
+    public void ExtendLoan(){
+        dueDate += (86400000 * daysRequested);
+        
+        daysRequested = 0;
+        extensionRequested = false;
+    }
+    
+    public void DenyLoan(){
+        daysRequested = 0;
+        extensionRequested = false;
     }
 
     public String getName() {
@@ -180,5 +205,21 @@ public class Resource implements java.io.Serializable {
 
     public void setInNewsletter(boolean inNewsletter) {
         this.inNewsletter = inNewsletter;
+    }
+
+    public int getLoanNoticeID() {
+        return loanNoticeID;
+    }
+
+    public void setLoanNoticeID(int loanNoticeSent) {
+        this.loanNoticeID = loanNoticeSent;
+    }
+
+    public boolean isExtensionRequested() {
+        return extensionRequested;
+    }
+
+    public int getDaysRequested() {
+        return daysRequested;
     }
 }

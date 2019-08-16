@@ -9,6 +9,7 @@ import Accounts.*;
 import Notifications.Notification;
 import apexsystem.*;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -152,7 +153,7 @@ public class ClientForm extends JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void ListResourcesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListResourcesButtonActionPerformed
-        ResourceListForm rlForm = new ResourceListForm(system.getResourceHandler(), user);
+        ResourceListForm rlForm = new ResourceListForm(system, user);
         
         rlForm.setVisible(true);
         rlForm.setLocationRelativeTo(null);
@@ -170,13 +171,8 @@ public class ClientForm extends JFrame {
     }//GEN-LAST:event_RequestResourceButtonActionPerformed
     
     private void ShowNotifications(){
-        notificationHandler.GenerateNotifications();
-        
-        for (Notification notification : notificationHandler.notificationList){
-            if (notification.getUserID().equals(user.getUserID())){
-                notification.Show();
-            }
-        }
+        notificationHandler.ShowForUser(user.getUserID());
+        notificationHandler.ClearForUser(user.getUserID());
     } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

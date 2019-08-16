@@ -6,7 +6,7 @@
 package apexsystem;
 
 import Notifications.*;
-import Resources.*;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -20,29 +20,58 @@ public class NotificationHandler {
     
     public NotificationHandler(ResourceHandler resourceHandler){
         this.resourceHandler = resourceHandler;
+        
+        Load();
     }
     
-    public void GenerateNotifications(){
-        notificationList.clear();
+    private void Load(){
         
-        for (Resource resource : resourceHandler.resourceList){
-            if (resource.getStatus() != ResourceStatus.AVAILABLE){
-                if ((resource.getDueDate() - System.currentTimeMillis() < (-86400000 * 20))){
-                    notificationList.add(new Notification(resource.getLoanedUser(), "Overdue Book Block", "The resource " + resource.getName() + " has been overdue for more than 20 days. You are now blocked from borrowing more resources until this item has been returned", NotificationType.WARNING));
-                }
-                else if (System.currentTimeMillis() > resource.getDueDate()){    
-                    notificationList.add(new Notification(resource.getLoanedUser(), "Overdue Book", "The resource " + resource.getName() + " is now overdue. You will be charged 10p per day and after 20 days you will be blocked from borrowing more resources.", NotificationType.WARNING));
-                }
-                else if ((resource.getDueDate() - System.currentTimeMillis()) < (86400000 * 7)){
-                    notificationList.add(new Notification(resource.getLoanedUser(), "One Week Warning", "The resource " + resource.getName() + " will be overdue in less than one week.", NotificationType.INFO));
-                }
+        File folder = new File("data/notifications/");
+        File[] resourceFiles = folder.listFiles();
+        
+        for (File file : resourceFiles){
+        
+            try {
+                 FileInputStream fileIn = new FileInputStream(file);
+                 ObjectInputStream in = new ObjectInputStream(fileIn);
+                 notificationList.add((Notification)in.readObject());
+                 in.close();
+                 fileIn.close();
+            } 
+            catch (IOException i) {
+                 i.printStackTrace();
+                 return;
+            } 
+            catch (ClassNotFoundException c) {
+                 System.out.println("Notification class not found");
+                 c.printStackTrace();
+                return;
             }
-            
-            if (resource.isReturnRequested()) notificationList.add(new Notification(resource.getLoanedUser(), "Return Request", "An Admin has requested you return the resource titled " + resource.getName() + ".", NotificationType.INFO));
-        }   
+        }
         
-        System.out.println("Loaded " + notificationList.size() + " notifications!");
+        System.out.println("Loaded " + notificationList.size() + " Notifications!");        
     }
+    
+    public void Save(){
+        
+        File folder = new File("data/notifications/");
+        
+        for(File f: folder.listFiles()) f.delete();
+     
+        for (Notification notification : notificationList){
+        
+            try {
+                File file = new File("data/notifications/" + notification.getId() + ".ser");
+                FileOutputStream fileOut = new FileOutputStream(file);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(notification);
+                out.close();
+                fileOut.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }   
+    } 
     
     public int GetNotificationCount(String UserID){
         int count = 0;
@@ -57,5 +86,32 @@ public class NotificationHandler {
         }
         
         return count;
+    }
+    
+    public void Add(String userID, String title, String text, NotificationType type){
+        
+        int max = 1;
+        
+        for (Notification notification : notificationList){
+            if (notification.getId() > max) max = notification.getId();            
+        }
+        
+        int id = max;
+        
+        notificationList.add(new Notification(id, userID, title, text, type));
+    }
+    
+    public void ShowForUser(String userID){
+        for (Notification notification : notificationList){
+            if (notification.getUserID().equals(userID)){
+                notification.Show();
+            }
+        }
+    }
+    
+    public void ClearForUser(String userID){
+        for (Notification notification : notificationList){
+            if (notification.getUserID().equals(userID)) notificationList.remove(notification);
+        }
     }
 }

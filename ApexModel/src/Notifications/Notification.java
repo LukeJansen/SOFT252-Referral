@@ -5,20 +5,23 @@
  */
 package Notifications;
 
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author lpjan
  */
-public class Notification {
+public class Notification implements Serializable{
     
+    private int id;
     private String userID;
     private String title;
     private String text;
     private NotificationType type;
     
-    public Notification (String userID, String title, String text, NotificationType type){
+    public Notification (int id, String userID, String title, String text, NotificationType type){
+        this.id = id;
         this.userID = userID;
         this.title = title;
         this.text = text;
@@ -36,5 +39,13 @@ public class Notification {
 
     public String getUserID() {
         return userID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

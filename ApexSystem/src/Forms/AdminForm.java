@@ -52,10 +52,11 @@ public class AdminForm extends JFrame {
         jLabel2 = new javax.swing.JLabel();
         PurchaseRequestsButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        RequestReturnButton = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        ManageNotiificationsButton = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         NotificationButton = new javax.swing.JButton();
+        PurchaseRequestsButton1 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(null);
@@ -63,6 +64,13 @@ public class AdminForm extends JFrame {
         setPreferredSize(new java.awt.Dimension(750, 300));
         setResizable(false);
         setSize(new java.awt.Dimension(750, 300));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jLabel.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jLabel.setText("Apex Library");
@@ -108,18 +116,11 @@ public class AdminForm extends JFrame {
         jLabel3.setText("Notifications");
         jLabel3.setToolTipText("");
 
-        RequestReturnButton.setText("Request Return");
-        RequestReturnButton.setToolTipText("");
-        RequestReturnButton.addActionListener(new java.awt.event.ActionListener() {
+        ManageNotiificationsButton.setText("Manage Notifications");
+        ManageNotiificationsButton.setToolTipText("");
+        ManageNotiificationsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RequestReturnButtonActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("List Resources");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                ManageNotiificationsButtonActionPerformed(evt);
             }
         });
 
@@ -133,6 +134,22 @@ public class AdminForm extends JFrame {
             }
         });
 
+        PurchaseRequestsButton1.setText("Loan Extension Requests");
+        PurchaseRequestsButton1.setActionCommand("");
+        PurchaseRequestsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PurchaseRequestsButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Create Custom Notification");
+        jButton7.setActionCommand("");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,7 +159,7 @@ public class AdminForm extends JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(132, 132, 132)
@@ -152,23 +169,24 @@ public class AdminForm extends JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(logoutButton))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ListResourceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CreateResourceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PurchaseRequestsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(RequestReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(PurchaseRequestsButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ListResourceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CreateResourceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PurchaseRequestsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(130, 130, 130)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ManageNotiificationsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel)
                     .addGroup(layout.createSequentialGroup()
@@ -180,22 +198,25 @@ public class AdminForm extends JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ManageNotiificationsButton)
+                        .addGap(34, 34, 34))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(CreateResourceButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(ListResourceButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(PurchaseRequestsButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(RequestReturnButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(ListResourceButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(PurchaseRequestsButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(PurchaseRequestsButton1)))
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -214,22 +235,18 @@ public class AdminForm extends JFrame {
     }//GEN-LAST:event_CreateResourceButtonActionPerformed
 
     private void ListResourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListResourceButtonActionPerformed
-        ResourceListForm rlForm = new ResourceListForm(system.getResourceHandler(), user);
+        ResourceListForm rlForm = new ResourceListForm(system, user);
         
         rlForm.setVisible(true);
         rlForm.setLocationRelativeTo(null);
     }//GEN-LAST:event_ListResourceButtonActionPerformed
 
-    private void RequestReturnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RequestReturnButtonActionPerformed
-        ResourceReturnForm rrForm = new ResourceReturnForm(system);
+    private void ManageNotiificationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageNotiificationsButtonActionPerformed
+        ResourceReturnForm rrForm = new ResourceReturnForm(system, user);
         
         rrForm.setVisible(true);
         rrForm.setLocationRelativeTo(null);
-    }//GEN-LAST:event_RequestReturnButtonActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_ManageNotiificationsButtonActionPerformed
 
     private void NotificationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificationButtonActionPerformed
         ShowNotifications();
@@ -242,14 +259,27 @@ public class AdminForm extends JFrame {
         rlForm.setLocationRelativeTo(null);
     }//GEN-LAST:event_PurchaseRequestsButtonActionPerformed
 
-    private void ShowNotifications(){
-        notificationHandler.GenerateNotifications();
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        NotificationButton.setText("Notifications (" + notificationHandler.GetNotificationCount(user.getUserID()) + ")");
+    }//GEN-LAST:event_formWindowGainedFocus
+
+    private void PurchaseRequestsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PurchaseRequestsButton1ActionPerformed
+        LoanRequestListForm lrlForm = new LoanRequestListForm(system.getResourceHandler());
         
-        for (Notification notification : notificationHandler.notificationList){
-            if (notification.getUserID().equals(user.getUserID())){
-                notification.Show();
-            }
-        }
+        lrlForm.setVisible(true);
+        lrlForm.setLocationRelativeTo(null);
+    }//GEN-LAST:event_PurchaseRequestsButton1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        CustomNotificationForm crForm = new CustomNotificationForm(system);
+        
+        crForm.setVisible(true);
+        crForm.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void ShowNotifications(){
+        notificationHandler.ShowForUser(user.getUserID());
+        notificationHandler.ClearForUser(user.getUserID());
     }    
     
     /**
@@ -290,11 +320,12 @@ public class AdminForm extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CreateResourceButton;
     private javax.swing.JButton ListResourceButton;
+    private javax.swing.JButton ManageNotiificationsButton;
     private javax.swing.JButton NotificationButton;
     private javax.swing.JButton PurchaseRequestsButton;
-    private javax.swing.JButton RequestReturnButton;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton PurchaseRequestsButton1;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

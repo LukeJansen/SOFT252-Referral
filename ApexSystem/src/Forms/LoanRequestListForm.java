@@ -6,9 +6,10 @@
 package Forms;
 
 import Resources.*;
+import Utility.*;
 import Accounts.*;
-import Notifications.NotificationType;
 import apexsystem.*;
+import java.util.HashSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,21 +17,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author lpjan
  */
-public class ResourceReturnForm extends javax.swing.JFrame {
+public class LoanRequestListForm extends javax.swing.JFrame {
 
     private ResourceHandler resourceHandler;
-    private ApexSystem system;
     private long lastClickTime;
     private User user;
     
     /**
      * Creates new form ResourceListForm
      */
-    public ResourceReturnForm(ApexSystem system, User user) {
-        this.resourceHandler = system.getResourceHandler();
-        this.system = system;
-        this.user = user;
-        lastClickTime = 0;
+    public LoanRequestListForm(ResourceHandler resourceHandler) {
+        this.resourceHandler = resourceHandler;
         
         initComponents();
         
@@ -60,11 +57,11 @@ public class ResourceReturnForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "User Name"
+                "Name", "User", "Days Requested"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -83,6 +80,7 @@ public class ResourceReturnForm extends javax.swing.JFrame {
         if (resourceTable.getColumnModel().getColumnCount() > 0) {
             resourceTable.getColumnModel().getColumn(0).setResizable(false);
             resourceTable.getColumnModel().getColumn(1).setResizable(false);
+            resourceTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,7 +98,6 @@ public class ResourceReturnForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void resourceTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resourceTableMouseClicked
-
         if (System.currentTimeMillis() - lastClickTime <= 500){
             System.out.println("Double Click");
             OpenItem();
@@ -126,14 +123,16 @@ public class ResourceReturnForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ResourceReturnForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoanRequestListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ResourceReturnForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoanRequestListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ResourceReturnForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoanRequestListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ResourceReturnForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoanRequestListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -150,31 +149,28 @@ public class ResourceReturnForm extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) resourceTable.getModel();
         tableModel.setRowCount(0);
               
-        for (Resource resource : resourceHandler.resourceList){
-            
-            String userName = "";
-            
-            for (User user : system.getLoginHandler().userList){
-                if (user.getUserID().equals(resource.getLoanedUser())){
-                    userName = user.getName();
-                }
-            }
-            
-            if (resource.getStatus() != ResourceStatus.AVAILABLE) tableModel.addRow(new Object[]{resource.getName(), userName});
+        for (Resource resource : resourceHandler.resourceList) {
+            if (resource.isExtensionRequested()) tableModel.addRow(new Object[]{resource.getName(), resource.getLoanedUser(), resource.getDaysRequested()});
         }
     }
     
-    private void OpenItem(){ 
-        
+    public void OpenItem(){
         for (Resource resource : resourceHandler.resourceList){
-            if (resourceTable.getValueAt(resourceTable.getSelectedRow(), 0) == resource.getName()){
-                int input = JOptionPane.showConfirmDialog(this, "Do you want to request " + resource.getName() + " be returned?");
-                
-                if (input == 0){
-                    system.getNotificationHandler().Add(user.getUserID(), "Return Request", "An Administrator has requested you return " + resource.getName() + ".", NotificationType.INFO);
+            if (resource.getName() == resourceTable.getValueAt(resourceTable.getSelectedRow(), 0) && resource.getLoanedUser() == resourceTable.getValueAt(resourceTable.getSelectedRow(), 1)){
+                int input = JOptionPane.showConfirmDialog(this, "Do you want to grant this loan extension?", "Loan Extension", JOptionPane.YES_NO_OPTION);
+            
+                if (input == 0) {
+                    resource.ExtendLoan();
                 }
+                else if (input == 1){
+                    resource.DenyLoan();
+                }
+                
+                FillTable();
+                return;
             }
         }
+        FillTable();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

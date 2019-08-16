@@ -7,7 +7,9 @@ package Forms;
 
 import Resources.*;
 import Accounts.*;
+import Notifications.NotificationType;
 import Utility.Utility;
+import apexsystem.NotificationHandler;
 import java.util.Date;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
@@ -22,14 +24,16 @@ public class ResourceInfoForm extends javax.swing.JFrame {
     private Resource resource;
     private User user;
     private ResourceListForm form;
+    private NotificationHandler notificationHandler;
     
     /**
      * Creates new form ResourceInfoForm
      */
-    public ResourceInfoForm(Resource resource, User user, ResourceListForm form) {
+    public ResourceInfoForm(Resource resource, User user, ResourceListForm form, NotificationHandler notificationHandler) {
         this.resource = resource;
         this.user = user;
         this.form = form;
+        this.notificationHandler = notificationHandler;
         
         initComponents();
         
@@ -69,6 +73,8 @@ public class ResourceInfoForm extends javax.swing.JFrame {
         ReturnButton = new javax.swing.JButton();
         DueDateLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        ExtensionButton = new javax.swing.JButton();
+        RequestReturnButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -146,13 +152,45 @@ public class ResourceInfoForm extends javax.swing.JFrame {
 
         jLabel9.setText("Due Date");
 
+        ExtensionButton.setText("Request Extension");
+        ExtensionButton.setEnabled(false);
+        ExtensionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExtensionButtonActionPerformed(evt);
+            }
+        });
+
+        RequestReturnButton.setText("Request Return");
+        RequestReturnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RequestReturnButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel9))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(NameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                            .addComponent(StatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(RatingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(DueDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CategoryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(34, 34, 34)
@@ -168,29 +206,16 @@ public class ResourceInfoForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AddRatingButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(LoanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(LoanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ExtensionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(RequestReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(ReturnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(CloseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel9))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(StatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(RatingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DueDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CategoryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                        .addComponent(CloseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,8 +245,6 @@ public class ResourceInfoForm extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(DueDateLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(RadioButton1)
@@ -235,7 +258,13 @@ public class ResourceInfoForm extends javax.swing.JFrame {
                     .addComponent(CloseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LoanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ReturnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ExtensionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RequestReturnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -294,6 +323,33 @@ public class ResourceInfoForm extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_ReturnButtonActionPerformed
+
+    private void ExtensionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExtensionButtonActionPerformed
+        String input = JOptionPane.showInputDialog("How many days extension would you like to request?", 0);
+        
+        int days = 0;
+        
+        if (input != null){
+        
+            try{
+                days = Integer.parseInt(input);
+            }
+            catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Please enter a whole number only!", "Error", JOptionPane.ERROR_MESSAGE);
+                input = null;
+            }
+            
+            resource.RequestExtension(days);
+        }
+    }//GEN-LAST:event_ExtensionButtonActionPerformed
+
+    private void RequestReturnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RequestReturnButtonActionPerformed
+        int input = JOptionPane.showConfirmDialog(this, "Do you want to request " + resource.getName() + " be returned?");
+                
+                if (input == 0){
+                    notificationHandler.Add(user.getUserID(), "Return Request", "An Administrator has requested you return " + resource.getName() + ".", NotificationType.INFO);
+                }
+    }//GEN-LAST:event_RequestReturnButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,6 +411,8 @@ public class ResourceInfoForm extends javax.swing.JFrame {
         
         LoanButton.setEnabled(resource.getStatus() == ResourceStatus.AVAILABLE && resource.getLoanType() != LoanType.REFERENCE);
         ReturnButton.setEnabled(resource.getLoanedUser().equals(user.getUserID()) && resource.getStatus() != ResourceStatus.AVAILABLE);
+        ExtensionButton.setEnabled(resource.getLoanedUser().equals(user.getUserID()) && resource.getStatus() != ResourceStatus.AVAILABLE);
+        RequestReturnButton.setVisible(user.getClass() == Administrator.class && resource.getStatus() != ResourceStatus.AVAILABLE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -362,6 +420,7 @@ public class ResourceInfoForm extends javax.swing.JFrame {
     private javax.swing.JLabel CategoryLabel;
     private javax.swing.JButton CloseButton;
     private javax.swing.JLabel DueDateLabel;
+    private javax.swing.JButton ExtensionButton;
     private javax.swing.JButton LoanButton;
     private javax.swing.JLabel NameLabel;
     private javax.swing.JRadioButton RadioButton1;
@@ -371,6 +430,7 @@ public class ResourceInfoForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton RadioButton5;
     private javax.swing.ButtonGroup RatingButtonGroup;
     private javax.swing.JLabel RatingLabel;
+    private javax.swing.JButton RequestReturnButton;
     private javax.swing.JButton ReturnButton;
     private javax.swing.JLabel StatusLabel;
     private javax.swing.JLabel TypeLabel;
