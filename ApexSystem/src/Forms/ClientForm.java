@@ -172,7 +172,6 @@ public class ClientForm extends JFrame {
     
     private void ShowNotifications(){
         notificationHandler.ShowForUser(user.getUserID());
-        notificationHandler.ClearForUser(user.getUserID());
     } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

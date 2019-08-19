@@ -22,6 +22,8 @@ public class Resource implements java.io.Serializable {
     private List<Integer> ratings;
     private float userRating;
     
+    private long creationDate;
+    
     private ResourceStatus status;
     private String loanedUser;
     private LoanType loanType;
@@ -47,6 +49,8 @@ public class Resource implements java.io.Serializable {
         loanedUser = "";
         
         ratings = new ArrayList<>();
+        
+        creationDate = System.currentTimeMillis();
     }
     
     public Resource(String name, ResourceType type, float category, int ID, LoanType loanType){
@@ -56,11 +60,13 @@ public class Resource implements java.io.Serializable {
         this.ID = ID;
         this.loanType = loanType;
         
-        userRating = 0;
+        userRating = -1;
         status = ResourceStatus.AVAILABLE;
         loanedUser = "";
         
         ratings = new ArrayList<>();
+        
+        creationDate = System.currentTimeMillis();
     }
     
     public void addRating(int rating){
@@ -221,5 +227,9 @@ public class Resource implements java.io.Serializable {
 
     public int getDaysRequested() {
         return daysRequested;
+    }
+
+    public long getCreationDate() {
+        return creationDate;
     }
 }

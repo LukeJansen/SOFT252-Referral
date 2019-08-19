@@ -393,7 +393,14 @@ public class ResourceInfoForm extends javax.swing.JFrame {
         TypeLabel.setText(resource.getType().name());
         CategoryLabel.setText(Utility.GetTypeFromDD(resource.getCategory()));
         StatusLabel.setText(resource.getStatus().name());
-        RatingLabel.setText(resource.getUserRating());
+        
+        String rating = "No User Ratings Yet!";
+        
+        if (!"-1.00".equals(resource.getUserRating())){
+                rating = resource.getUserRating();
+        }
+        
+        RatingLabel.setText(rating);
         
         String dueDate = "";
         if (resource.getLoanType() == LoanType.REFERENCE){

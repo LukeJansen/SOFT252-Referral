@@ -154,7 +154,14 @@ public class ResourceListForm extends javax.swing.JFrame {
         tableModel.setRowCount(0);
               
         for (Resource resource : resourceHandler.resourceList){
-            tableModel.addRow(new Object[]{resource.getName(), resource.getType().name(), Utility.GetTypeFromDD(resource.getCategory()), resource.getUserRating()});
+            
+            String rating = "No User Ratings Yet!";
+            
+            if (!"-1.00".equals(resource.getUserRating())){
+                rating = resource.getUserRating();
+            }
+            
+            tableModel.addRow(new Object[]{resource.getName(), resource.getType().name(), Utility.GetTypeFromDD(resource.getCategory()), rating});
         }
     }
     

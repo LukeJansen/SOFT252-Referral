@@ -8,6 +8,7 @@ package apexsystem;
 import Notifications.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 /**
  *
@@ -26,7 +27,7 @@ public class NotificationHandler {
     
     private void Load(){
         
-        File folder = new File("data/notifications/");
+        File folder = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/notifications/");
         File[] resourceFiles = folder.listFiles();
         
         for (File file : resourceFiles){
@@ -54,14 +55,14 @@ public class NotificationHandler {
     
     public void Save(){
         
-        File folder = new File("data/notifications/");
+        File folder = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/notifications/");
         
         for(File f: folder.listFiles()) f.delete();
      
         for (Notification notification : notificationList){
         
             try {
-                File file = new File("data/notifications/" + notification.getId() + ".ser");
+                File file = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/notifications/" + notification.getId() + ".ser");
                 FileOutputStream fileOut = new FileOutputStream(file);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(notification);
@@ -75,12 +76,9 @@ public class NotificationHandler {
     
     public int GetNotificationCount(String UserID){
         int count = 0;
-        System.out.println(notificationList.size());
         
         for (Notification notification : notificationList){
-            System.out.println("loop");
             if (notification.getUserID().equals(UserID)) {
-                System.out.println("Add");
                 count += 1;
             }
         }
@@ -102,16 +100,19 @@ public class NotificationHandler {
     }
     
     public void ShowForUser(String userID){
-        for (Notification notification : notificationList){
-            if (notification.getUserID().equals(userID)){
-                notification.Show();
+        try {
+            for (Notification notification : notificationList){
+                if (notification.getUserID().equals(userID)){
+                    notification.Show();
+                }
+            }
+
+            for (Notification notification : notificationList){
+                if (notification.getUserID().equals(userID)) notificationList.remove(notification);
             }
         }
-    }
-    
-    public void ClearForUser(String userID){
-        for (Notification notification : notificationList){
-            if (notification.getUserID().equals(userID)) notificationList.remove(notification);
+        catch (ConcurrentModificationException e){
+            System.out.println("Concurrent Modification Caught!");
         }
     }
 }

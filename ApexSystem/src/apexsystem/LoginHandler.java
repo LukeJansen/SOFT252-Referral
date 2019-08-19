@@ -35,14 +35,8 @@ public class LoginHandler {
     
     private void Load(){
         
-//        userList.add(new Administrator("0000", "pass", "Administrator"));
-//        userList.add(new Client("1001", "pass", "User 1"));
-//        userList.add(new Client("1002", "pass", "User 2"));
-//        userList.add(new Client("1003", "pass", "User 3"));
-//        userList.add(new Client("1004", "pass", "User 4"));
-//        userList.add(new Client("1005", "pass", "User 5"));
         
-        File folder = new File("data/users/");
+        File folder = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/users/");
         File[] userFiles = folder.listFiles();
         
         for (File file : userFiles){
@@ -65,6 +59,8 @@ public class LoginHandler {
             }
         }
         
+        if (userList.size() == 0) CreateDefaultLogins();
+        
         System.out.println("Loaded " + userList.size() + " logins!");        
     }
     
@@ -73,7 +69,7 @@ public class LoginHandler {
         for (User user : userList){
         
             try {
-                File file = new File("data/users/" + user.getUserID() + ".ser");
+                File file = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/users/" + user.getUserID() + ".ser");
                 FileOutputStream fileOut = new FileOutputStream(file);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(user);
@@ -85,4 +81,13 @@ public class LoginHandler {
             }
         }   
     } 
+    
+    public void CreateDefaultLogins(){
+        userList.add(new Administrator("0000", "pass", "Administrator"));
+        userList.add(new Client("1001", "pass", "User 1"));
+        userList.add(new Client("1002", "pass", "User 2"));
+        userList.add(new Client("1003", "pass", "User 3"));
+        userList.add(new Client("1004", "pass", "User 4"));
+        userList.add(new Client("1005", "pass", "User 5"));
+    }
 }

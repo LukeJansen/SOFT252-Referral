@@ -28,7 +28,7 @@ public class RequestHandler {
     
     private void Load(){
         
-        File folder = new File("data/requests/");
+        File folder = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/requests/");
         File[] resourceFiles = folder.listFiles();
         
         for (File file : resourceFiles){
@@ -59,7 +59,7 @@ public class RequestHandler {
         for (PurchaseRequest request : requestList){
         
             try {
-                File file = new File("data/requests/" + requestList.indexOf(request) + ".ser");
+                File file = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/requests/" + requestList.indexOf(request) + ".ser");
                 FileOutputStream fileOut = new FileOutputStream(file);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(request);

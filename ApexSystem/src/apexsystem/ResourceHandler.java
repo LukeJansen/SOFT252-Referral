@@ -29,7 +29,7 @@ public class ResourceHandler {
     
     private void Load(){
         
-        File folder = new File("data/resources/");
+        File folder = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/resources/");
         File[] resourceFiles = folder.listFiles();
         
         for (File file : resourceFiles){
@@ -54,6 +54,8 @@ public class ResourceHandler {
             } 
         }
         
+        if (resourceList.size() == 0) CreateDefaultResources();
+        
         System.out.println("Loaded " + resourceList.size() + " Resources!");        
     }
     
@@ -62,7 +64,7 @@ public class ResourceHandler {
         for (Resource resource : resourceList){
         
             try {
-                File file = new File("data/resources/" + resource.getID() + ".ser");
+                File file = new File(System.getenv("LOCALAPPDATA") + "/Apex Library System/data/resources/" + resource.getID() + ".ser");
                 FileOutputStream fileOut = new FileOutputStream(file);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(resource);
@@ -92,4 +94,27 @@ public class ResourceHandler {
             }
         }
     } 
+    
+    public void CreateDefaultResources(){
+        resourceList.add(new Resource("Discrete mathematics for Computer Science", ResourceType.BOOK, 510, 0,LoanType.SHORTTERM));
+        resourceList.add(new Resource("Art Incorporated: the story of contemporary art", ResourceType.BOOK, 709.05f, 1,LoanType.SHORTTERM));
+        resourceList.add(new Resource("When the pyramids were built : Egyptian art of the Old Kingdom", ResourceType.BOOK, 709.32f, 2,LoanType.REFERENCE));
+        resourceList.add(new Resource("An introduction to using GIS in marine biology", ResourceType.BOOK, 578.770285f, 3,LoanType.LONGTERM));
+        resourceList.add(new Resource("Monty Python, Shakespeare, and English Renaissance drama", ResourceType.BOOK, 822.33f, 4,LoanType.SHORTTERM));
+        resourceList.add(new Resource("Computer hacking : computer hacking and Python", ResourceType.BOOK, 005.8f, 5,LoanType.SHORTTERM));
+        resourceList.add(new Resource("The Social science enyclopedia", ResourceType.BOOK, 300.3f, 6,LoanType.REFERENCE));
+        resourceList.add(new Resource("Food science & technology", ResourceType.NEWSPAPER, 664f, 7,LoanType.SHORTTERM));
+        resourceList.add(new Resource("Sophie's World", ResourceType.DVD, 839.828f, 8,LoanType.SHORTTERM));
+        resourceList.add(new Resource("The role of the forensic psychologist in child mental health.", ResourceType.NEWSPAPER, 104f, 9,LoanType.SHORTTERM));
+        resourceList.add(new Resource("The Ashgate Research Companion to Religion and Conflict Resolution", ResourceType.BOOK, 201.7273f, 10,LoanType.LONGTERM));
+        resourceList.add(new Resource("This is Scientology an overview of the world's fastest growing religion.", ResourceType.DVD, 299.936f, 11,LoanType.REFERENCE));
+        resourceList.add(new Resource("Voters, patrons, and parties : the unreformed electoral system of Hanoverian England, 1734-1832", ResourceType.BOOK, 942.073f, 12,LoanType.LONGTERM));
+        resourceList.add(new Resource("Monuments & maidens : the allegory of the female form", ResourceType.BOOK, 704.942f, 13,LoanType.SHORTTERM));
+        resourceList.add(new Resource("Probabilistic and statistical methods in computer science", ResourceType.BOOK, 004.0151f, 14,LoanType.SHORTTERM));
+        resourceList.add(new Resource("Visible thought : the new psychology of body language", ResourceType.BOOK, 153.69f, 15,LoanType.REFERENCE));
+        resourceList.add(new Resource("Introducing second language acquisition", ResourceType.BOOK, 418, 16,LoanType.SHORTTERM));
+        resourceList.add(new Resource("The Cambridge introduction to literature and psychoanalysis", ResourceType.BOOK, 801.92f, 17,LoanType.SHORTTERM));
+        resourceList.add(new Resource("The culture of death", ResourceType.BOOK, 306.9f, 18,LoanType.SHORTTERM));
+        resourceList.add(new Resource("Anime : a history", ResourceType.BOOK, 741.5f, 19,LoanType.SHORTTERM));
+    }
 }
