@@ -6,11 +6,16 @@
 package Utility;
 
 /**
- *
+ * Utility Class
  * @author lpjan
  */
 public class Utility {
     
+    /**
+     * Returns the category of a resource from its Dewey Decimal Number
+     * @param ddNum Dewey Decimal Number
+     * @return Category of Resource
+     */
     public static String GetTypeFromDD(float ddNum){
         if (ddNum < 100){
             return "Computer Science, Information & General Works";

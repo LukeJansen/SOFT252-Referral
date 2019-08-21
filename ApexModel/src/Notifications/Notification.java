@@ -20,6 +20,14 @@ public class Notification implements Serializable{
     private String text;
     private NotificationType type;
     
+    /**
+     * The default constructor for the Notification class.
+     * @param id Notification ID
+     * @param userID User ID
+     * @param title Title for Notification Box
+     * @param text Text for Notification Box
+     * @param type Type of Notification.
+     */
     public Notification (int id, String userID, String title, String text, NotificationType type){
         this.id = id;
         this.userID = userID;
@@ -28,6 +36,9 @@ public class Notification implements Serializable{
         this.type = type;
     }
     
+    /**
+     * Shows this notification to the user.
+     */
     public void Show(){
         if (type == NotificationType.INFO){
             JOptionPane.showMessageDialog(null, text, title, JOptionPane.INFORMATION_MESSAGE);
@@ -37,14 +48,27 @@ public class Notification implements Serializable{
         }        
     }
 
+    /**
+     * Returns the ID of the user this notification
+     * is attached to.
+     * @return userID
+     */
     public String getUserID() {
         return userID;
     }
 
+    /**
+     * Returns the ID of this notification.
+     * @return id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the ID of this notification.
+     * @param id id
+     */
     public void setId(int id) {
         this.id = id;
     }

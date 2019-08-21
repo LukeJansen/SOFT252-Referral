@@ -6,13 +6,24 @@
 package Resources;
 
 /**
- *
+ * Types for Resources.
  * @author lpjan
  */
 public enum ResourceType {
     
+    /**
+     * Book
+     */
     BOOK,
+
+    /**
+     * DVD
+     */
     DVD,
+
+    /**
+     * Newspaper
+     */
     NEWSPAPER
     
 }

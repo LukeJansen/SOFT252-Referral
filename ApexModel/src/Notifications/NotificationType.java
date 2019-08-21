@@ -5,15 +5,21 @@
  */
 package Notifications;
 
-import java.io.Serializable;
-
 /**
- *
+ * The different types of Notification available for the
+ * system to send to users.
  * @author lpjan
  */
 public enum NotificationType{
     
+    /**
+     * Informative notification.
+     */
     INFO,
+
+    /**
+     * Warning notification.
+     */
     WARNING
     
 }

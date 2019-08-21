@@ -6,23 +6,25 @@
 package Accounts;
 
 /**
- *
+ * The Administrator class holds all information
+ * about Administrator accounts.
  * @author lpjan
  */
 public class Administrator extends User{
     
+    /**
+     * Passes this constructor up to the User class.
+     */
     public Administrator(){
         super();
     }
     
-    public Administrator(String UID){
-        super(UID);
-    }
-    
-    public Administrator(String UID, String pass){
-        super(UID, pass);
-    }
-    
+    /**
+     * Passes this constructor up to the User class.
+     * @param UID User ID
+     * @param pass Password
+     * @param cname User's Name
+     */
     public Administrator(String UID, String pass, String cname){
         super(UID, pass, cname);
     }

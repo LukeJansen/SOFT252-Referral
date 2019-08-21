@@ -6,23 +6,25 @@
 package Accounts;
 
 /**
- *
+ * The Client class holds all information
+ * about Client accounts.
  * @author lpjan
  */
 public class Client extends User{
     
+    /**
+     * Passes this constructor up to the User class.
+     */
     public Client(){
         super();
     }
     
-    public Client(String UID){
-        super(UID);
-    }
-    
-    public Client(String UID, String pass){
-        super(UID, pass);
-    }
-    
+    /**
+     * Passes this constructor up to the User class.
+     * @param UID User ID
+     * @param pass Password
+     * @param cname User's Name
+     */
     public Client(String UID, String pass, String cname){
         super(UID, pass, cname);
     }
