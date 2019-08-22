@@ -19,9 +19,6 @@ public class CustomNotificationForm extends javax.swing.JFrame {
     private NotificationHandler notificationHandler;
     private ArrayList<User> userList;
     
-    /**
-     * Creates new form NewResourceForm
-     */
     public CustomNotificationForm(ApexSystem system) {
         this.notificationHandler = system.getNotificationHandler();
         this.userList = system.getLoginHandler().userList;

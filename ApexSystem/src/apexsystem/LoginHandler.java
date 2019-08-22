@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class LoginHandler {
     
-    public ArrayList<User> userList = new ArrayList<User>();
+    public ArrayList<User> userList = new ArrayList<>();
     
     public LoginHandler(){
         Load();
@@ -49,17 +49,15 @@ public class LoginHandler {
                  fileIn.close();
             } 
             catch (IOException i) {
-                 i.printStackTrace();
                  return;
             } 
             catch (ClassNotFoundException c) {
                  System.out.println("Employee class not found");
-                 c.printStackTrace();
                 return;
             }
         }
         
-        if (userList.size() == 0) CreateDefaultLogins();
+        if (userList.isEmpty()) CreateDefaultLogins();
         
         System.out.println("Loaded " + userList.size() + " logins!");        
     }
@@ -77,7 +75,6 @@ public class LoginHandler {
                 fileOut.close();
                 System.out.printf("\nSerialized data for user " + user.getUserID());
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }   
     } 

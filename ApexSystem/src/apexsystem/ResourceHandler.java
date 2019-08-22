@@ -9,8 +9,6 @@ import Notifications.*;
 import Resources.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class ResourceHandler {
     
-    public ArrayList<Resource> resourceList = new ArrayList<Resource>();
+    public ArrayList<Resource> resourceList = new ArrayList<>();
     private ApexSystem system;
     
     public ResourceHandler(ApexSystem system){
@@ -47,14 +45,13 @@ public class ResourceHandler {
                 return;
             }
             catch (IOException i) {
-                i.printStackTrace();
                  return;
             } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
+                return;
             } 
         }
         
-        if (resourceList.size() == 0) CreateDefaultResources();
+        if (resourceList.isEmpty()) CreateDefaultResources();
         
         System.out.println("Loaded " + resourceList.size() + " Resources!");        
     }
@@ -72,7 +69,6 @@ public class ResourceHandler {
                 fileOut.close();
                 System.out.printf("\nSerialized data for resource " + resource.getID());
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }   
     } 

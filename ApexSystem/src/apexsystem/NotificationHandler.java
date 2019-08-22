@@ -16,7 +16,7 @@ import java.util.ConcurrentModificationException;
  */
 public class NotificationHandler {
     
-    public ArrayList<Notification> notificationList = new ArrayList<Notification>();
+    public ArrayList<Notification> notificationList = new ArrayList<>();
     private ResourceHandler resourceHandler;
     
     public NotificationHandler(ResourceHandler resourceHandler){
@@ -40,12 +40,10 @@ public class NotificationHandler {
                  fileIn.close();
             } 
             catch (IOException i) {
-                 i.printStackTrace();
                  return;
             } 
             catch (ClassNotFoundException c) {
                  System.out.println("Notification class not found");
-                 c.printStackTrace();
                 return;
             }
         }
@@ -69,7 +67,6 @@ public class NotificationHandler {
                 out.close();
                 fileOut.close();
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }   
     } 

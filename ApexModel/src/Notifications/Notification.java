@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
 public class Notification implements Serializable{
     
     private int id;
-    private String userID;
-    private String title;
-    private String text;
-    private NotificationType type;
+    private final String userID;
+    private final String title;
+    private final String text;
+    private final NotificationType type;
     
     /**
      * The default constructor for the Notification class.

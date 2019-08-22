@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class RequestHandler {
     
-    private ArrayList<PurchaseRequest> requestList = new ArrayList<PurchaseRequest>();
+    private ArrayList<PurchaseRequest> requestList = new ArrayList<>();
     
     public RequestHandler(){
         Load();
@@ -41,12 +41,10 @@ public class RequestHandler {
                  fileIn.close();
             } 
             catch (IOException i) {
-                 i.printStackTrace();
                  return;
             } 
             catch (ClassNotFoundException c) {
                  System.out.println("Request class not found");
-                 c.printStackTrace();
                 return;
             }
         }
@@ -67,7 +65,6 @@ public class RequestHandler {
                 fileOut.close();
                 System.out.printf("\nSerialized data for request " + requestList.indexOf(request));
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }   
     } 

@@ -6,10 +6,8 @@
 package Forms;
 
 import Accounts.*;
-import Notifications.Notification;
 import apexsystem.*;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,9 +19,6 @@ public class ClientForm extends JFrame {
     private ApexSystem system;
     private NotificationHandler notificationHandler;
     
-    /**
-     * Creates new form AdminForm
-     */
     public ClientForm(User user, ApexSystem system) {
         this.user = user;
         this.system = system;

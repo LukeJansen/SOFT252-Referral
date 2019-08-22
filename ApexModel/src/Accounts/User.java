@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * specific user types.
  * @author lpjan
  */
-public class User implements java.io.Serializable {
+public abstract class User implements java.io.Serializable {
     
     private String userID;
     private String password;

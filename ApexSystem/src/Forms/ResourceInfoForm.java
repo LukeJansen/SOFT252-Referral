@@ -336,7 +336,6 @@ public class ResourceInfoForm extends javax.swing.JFrame {
             }
             catch (NumberFormatException e){
                 JOptionPane.showMessageDialog(this, "Please enter a whole number only!", "Error", JOptionPane.ERROR_MESSAGE);
-                input = null;
             }
             
             resource.RequestExtension(days);
@@ -402,7 +401,7 @@ public class ResourceInfoForm extends javax.swing.JFrame {
         
         RatingLabel.setText(rating);
         
-        String dueDate = "";
+        String dueDate;
         if (resource.getLoanType() == LoanType.REFERENCE){
             dueDate = "Resource Cannot Be Loaned";
         }

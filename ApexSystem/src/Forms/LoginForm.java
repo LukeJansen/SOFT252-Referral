@@ -4,10 +4,6 @@ package Forms;
 import Accounts.*;
 import apexsystem.ApexSystem;
 import apexsystem.LoginHandler;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Arrays;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /*

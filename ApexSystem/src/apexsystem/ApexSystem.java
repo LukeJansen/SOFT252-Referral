@@ -6,17 +6,13 @@
 package apexsystem;
 
 import Forms.*;
-import Notifications.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -87,7 +83,6 @@ public class ApexSystem {
             System.setOut(fileOut);
         } catch (FileNotFoundException ex) {
             System.out.println("Logs folder not found!");
-            ex.printStackTrace();
         }
         
         

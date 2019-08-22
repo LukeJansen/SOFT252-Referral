@@ -6,7 +6,6 @@
 package Forms;
 
 import Accounts.*;
-import Notifications.*;
 import apexsystem.*;
 import javax.swing.JFrame;
 /**
@@ -18,10 +17,7 @@ public class AdminForm extends JFrame {
     private User user;
     private ApexSystem system;
     private NotificationHandler notificationHandler;
-    
-    /**
-     * Creates new form AdminForm
-     */
+
     public AdminForm(User user, ApexSystem system) {
         this.user = user;
         this.system = system;
